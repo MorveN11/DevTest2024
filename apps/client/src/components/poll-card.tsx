@@ -29,11 +29,11 @@ export function PollCard({ poll }: { poll: Poll }) {
           </DialogTrigger>
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
-              <DialogTitle>New Poll</DialogTitle>
-              <DialogDescription>Create a New Poll</DialogDescription>
+              <DialogTitle>Vote</DialogTitle>
+              <DialogDescription>{poll.name}</DialogDescription>
             </DialogHeader>
 
-            <DialogFooter className="sm:justify-start">
+            <DialogFooter className="sm:justify-end">
               <DialogClose asChild>
                 <Button type="button" variant="secondary">
                   Close
