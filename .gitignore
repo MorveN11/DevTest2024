@@ -1,0 +1,9 @@
+# Git ignore configuration
+
+# Output
+bin/
+build/
+obj/
+
+# Bin log
+*.binlog
