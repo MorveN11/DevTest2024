@@ -9,4 +9,9 @@ public sealed class Option : IEntity
 
     public IList<Vote> Votes { get; set; } = [];
     public Guid Id { get; init; } = Guid.NewGuid();
+
+    public bool EmailAlreadyExists(string email)
+    {
+        return Votes.Any(v => v.Email == email);
+    }
 }

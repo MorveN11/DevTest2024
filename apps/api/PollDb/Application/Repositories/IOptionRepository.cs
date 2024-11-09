@@ -4,14 +4,14 @@ namespace PollDb.Application.Repositories;
 
 public interface IOptionRepository : IRepository<Option>
 {
-    async Task<string> CreateList(IList<Option> options)
+    Task<bool> Exists(Guid optionId);
+
+    async Task CreateList(IList<Option> options)
     {
         foreach (Option option in options)
         {
             await Create(option);
         }
-
-        return "Options Created Successfully";
     }
 
     async Task<IDictionary<Guid, List<Option>>> GroupOptionsByPoll()

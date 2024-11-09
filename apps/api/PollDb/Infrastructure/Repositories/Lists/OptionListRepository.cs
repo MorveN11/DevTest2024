@@ -28,4 +28,9 @@ public sealed class OptionListRepository(IVoteRepository voteRepository) : IOpti
 
         return Task.FromResult(entity);
     }
+
+    public Task<bool> Exists(Guid optionId)
+    {
+        return Task.FromResult(_options.Any(o => o.Id == optionId));
+    }
 }
