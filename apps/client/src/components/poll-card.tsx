@@ -13,6 +13,8 @@ import {
   DialogClose
 } from '@/components/ui/dialog';
 
+import { VoteForm } from '@/components/forms/vote-form';
+
 export function PollCard({ poll }: { poll: Poll }) {
   return (
     <Card className="relative w-full">
@@ -33,15 +35,7 @@ export function PollCard({ poll }: { poll: Poll }) {
               <DialogDescription>{poll.name}</DialogDescription>
             </DialogHeader>
 
-            <DialogFooter className="sm:justify-end">
-              <DialogClose asChild>
-                <Button type="button" variant="secondary">
-                  Close
-                </Button>
-              </DialogClose>
-
-              <Button type="button">Save</Button>
-            </DialogFooter>
+            <VoteForm poll={poll} />
           </DialogContent>
         </Dialog>
 
