@@ -8,9 +8,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-  DialogClose
+  DialogTrigger
 } from '@/components/ui/dialog';
 
 import { VoteForm } from '@/components/forms/vote-form';

@@ -8,9 +8,12 @@ import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Poll } from '@/models/poll.model';
+import { Poll, CreateVote } from '@/models/poll.model';
+import { toast } from 'sonner';
+import { createVote } from '@/api/poll.api';
 
 import { DialogFooter, DialogClose } from '@/components/ui/dialog';
+import { useRouter } from 'next/navigation';
 
 const formSchema = z.object({
   email: z.string().email('Please provide a valid email'),
@@ -18,6 +21,8 @@ const formSchema = z.object({
 });
 
 export function VoteForm({ poll }: { poll: Poll }) {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -26,8 +31,18 @@ export function VoteForm({ poll }: { poll: Poll }) {
     }
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const vote: CreateVote = {
+      voterEmail: values.email,
+      pollId: poll.id,
+      optionId: poll.options.find((o) => o.name === values.option)!.id
+    };
+
+    const response = await createVote(vote);
+
+    toast.success(response);
+
+    router.refresh();
   }
 
   return (

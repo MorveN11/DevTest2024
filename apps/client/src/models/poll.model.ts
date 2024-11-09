@@ -11,3 +11,9 @@ export type Poll = {
   totalVotes: number;
   options: Option[];
 };
+
+export type CreateVote = {
+  pollId: string;
+  optionId: string;
+  voterEmail: string;
+};
