@@ -1,5 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using PollDb.Application.Converters;
+using PollDb.Application.Dtos;
 using PollDb.Application.Repositories;
+using PollDb.Application.Responses;
+using PollDb.Domain.Entities;
 
 namespace PollDb.Presentation.Controllers;
 
@@ -11,20 +15,36 @@ public class PollController(
     IVoteRepository voteRepository)
 {
     [HttpGet]
-    public Task<IResult> GetAllPolls()
+    public async Task<IResult> GetAllPolls()
     {
-        return null;
+        IList<Poll> polls = await pollRepository.GetAll();
+
+        IList<GetPollResponse> response = polls.Select(p => new GetPollResponse(p)).ToList();
+
+        return Results.Ok(response);
     }
 
     [HttpPost]
-    public Task<IResult> PostPoll()
+    public async Task<IResult> PostPoll([FromBody] CreateNewPollDto request)
     {
-        return null;
+        Poll poll = new CreateNewPollDtoToPoll().Convert(request);
+
+        Poll responsePoll = await pollRepository.Create(poll);
+
+        GetPollResponse response = new(responsePoll);
+
+        return Results.Ok(response);
     }
 
-    [HttpPost("{optionId:guid}/votes")]
-    public Task<IResult> PostVote([FromRoute] Guid optionId)
+    [HttpPost("{pollId:guid}/votes")]
+    public async Task<IResult> PostVote([FromRoute] Guid pollId, [FromBody] CreateNewVoteDto request)
     {
-        return null;
+        Vote vote = new CreateNewVoteDtoToVote().Convert(request);
+
+        Vote responseVote = await voteRepository.Create(vote);
+
+        CreateVoteResponse response = new(responseVote, pollId);
+
+        return Results.Ok(response);
     }
 }
