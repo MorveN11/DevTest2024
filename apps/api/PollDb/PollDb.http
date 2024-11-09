@@ -1,6 +1,0 @@
-@PollDb_HostAddress = http://localhost:5053
-
-GET {{PollDb_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
